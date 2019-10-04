@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,15 +58,18 @@ public class MainActivity extends AppCompatActivity {
      * 如findViewById，设置事件监听等
      */
     void init(){
-        //判断是否需要动态申请权限
-        if(!checkPermission()) {
-            startRequestPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
-        }
-
+        initPermission();
         initToolbar();
         initFloatActionBar();
         initDrawerLayout();
         initRecyclerView();
+    }
+
+    private void initPermission() {
+        //判断是否需要动态申请权限
+        if(!checkPermission()) {
+            startRequestPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
+        }
     }
 
     //请求权限
@@ -74,23 +78,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //处理权限申请回调
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //如果用户允许
-                } else {
-                    //如果拒绝授予权限,且勾选了不再提醒
-                    if (!shouldShowRequestPermissionRationale(permissions[0])) {
-                        //说明申请权限原因
-                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-                        dialogBuilder.setView(R.layout.dialog);
-                    } else {
-                        //去设置页面
-//                         goSetting();
-                    }
-                }
+        if (requestCode == REQUEST_CODE&&grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            //如果用户允许
+        } else {
+            //如果拒绝授予权限,且勾选了不再提醒
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setView(R.layout.dialog);
+            if (!shouldShowRequestPermissionRationale(permissions[0])) {
+                //说明申请权限原因
+                builder.setView(R.layout.dialog);
+                builder.show();
+            } else {
+                //去设置页面
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

@@ -52,20 +52,19 @@ public class FileHelper {
      * @return 文件内容
      * @throws IOException
      */
+
     private static String readWithPath(String path) throws IOException {
         File file = new File(path);
         FileInputStream inputStream = new FileInputStream(file);
         BufferedInputStream bufferedOutputStream = new BufferedInputStream(inputStream);
         InputStreamReader inputStreamReader = new InputStreamReader(bufferedOutputStream);
         BufferedReader reader = new BufferedReader(inputStreamReader);
-        StringBuilder content = null;
+        StringBuilder content = new StringBuilder();
         String line;
-        while (null!=(line = reader.readLine())) {
-            assert content != null;
+        while ((line = reader.readLine()) != null) {
             content.append(line);
             content.append("\n");
         }
-        assert content != null;
         return  content.toString();
     }
 

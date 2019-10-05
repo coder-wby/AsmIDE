@@ -4,15 +4,14 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -39,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout mainDrawerLayout_left;
     FloatingActionButton main_fab;
     RecyclerView main_RecyclerView_left;
-    private final int REQUEST_CODE = 2;
     private FileHelper fileHelper;
     private String[] filelist;
     private ArrayList<String> left_item_text;
+    private int REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initPermission() {
-        //判断是否需要动态申请权限
+        //判断清单下有没有注册权限
         if(!checkPermission()) {
             startRequestPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
         }
@@ -80,33 +79,33 @@ public class MainActivity extends AppCompatActivity {
     //处理权限申请回调
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE&&grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode ==  REQUEST_CODE&&grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             //如果用户允许
+
         } else {
-            //如果拒绝授予权限,且勾选了不再提醒
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setView(R.layout.dialog);
-            if (!shouldShowRequestPermissionRationale(permissions[0])) {
-                //说明申请权限原因
-                builder.setView(R.layout.dialog);
-                builder.show();
-            } else {
-                //去设置页面
-            }
+            //如果用户拒绝
+            //说明申请权限原因
+            AppCompatDialog dialog = new AppCompatDialog(this);
+            View dialogView;
+            dialogView = LayoutInflater.from(getApplication()).inflate(R.layout.permission_dialog,null);
+            dialog.setContentView(dialogView);
+            dialog.show();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     //检查是否存在危险权限
     private boolean checkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 return true;
             } else {
                 return false;
             }
-        } else {
+        else {
             return true;
         }
     }
@@ -161,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
         main_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -182,27 +182,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 }
 

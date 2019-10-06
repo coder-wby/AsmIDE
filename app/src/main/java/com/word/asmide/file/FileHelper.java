@@ -71,4 +71,10 @@ public class FileHelper {
     public String[] list() {
         return new File(currentPath).list();
     }
+
+    public void gotoParent() {
+        formatCurrentPath();
+        new File(currentPath).getParent();
+        formatCurrentPath();
+    }
 }

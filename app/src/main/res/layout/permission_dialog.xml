@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/permission_img"
-        android:text="text" />
+        android:text="" />
 
     <TextView
         android:id="@+id/permission_message"

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AsmIDE</string>
-    <string name="permission_message">我们需要那些权限来对文件进行读写操作。您无需担心，我们不会用这些权限进行非法用途。</string>
+    <string name="permission_message">我们需要那些权限来完成功能。您无需担心，我们不会用这些权限进行非法用途。</string>
+    <string name="permission_warning">权限警告</string>
+    <string name="file_parent">./</string>
 </resources>

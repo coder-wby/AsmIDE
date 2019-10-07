@@ -3,5 +3,6 @@
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="permission_message">我们需要那些权限，来对文件进行读写操作。您无需担心，我们不会用这些权限进行非法用途。</string>
-    <string name="file_parent"><![CDATA[<]]></string>
+    <string name="file_parent">./</string>
+    <string name="permission_warning">Permission Warning</string>
 </resources>

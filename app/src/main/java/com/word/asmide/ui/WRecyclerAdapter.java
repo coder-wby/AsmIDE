@@ -16,11 +16,11 @@ import java.util.List;
 public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.ViewHolder> {
 
     private Context context;
-    private List<String> items;
+    private String[] items;
     public static String PARENT_DIR = "./";
     private OnItemClickListener itemClickListener;
 
-    public WRecyclerAdapter(Context context, List<String> items) {
+    public WRecyclerAdapter(Context context, String[] items) {
         this.context = context;
         this.items = items;
     }
@@ -29,7 +29,7 @@ public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.View
      * 更新列表数据并重绘
       * @param items 新的数据
      */
-    public void update(List<String> items){
+    public void update(String[] items){
         this.items = items;
         notifyDataSetChanged();
     }
@@ -57,8 +57,7 @@ public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        String tv = items.get(position);
-        holder.item_TextView.setText(tv);
+        holder.item_TextView.setText(items[position]);
         //判断其是否为空，若不为空，则为其设置点击监听
         if(itemClickListener != null) {
 
@@ -75,7 +74,7 @@ public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.View
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return items.length;
     }
 
     public interface OnItemClickListener {

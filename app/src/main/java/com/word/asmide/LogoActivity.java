@@ -18,7 +18,6 @@ import android.view.View;
 
 public class LogoActivity extends AppCompatActivity {
 
-    private int REQUEST_CODE = 2;
 
 
     @Override
@@ -31,14 +30,14 @@ public class LogoActivity extends AppCompatActivity {
 
     private void initPermission() {
         if(!checkPermission()) {
-            startRequestPermision(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
+            startRequestPermision(PermissionUtil.Permission);
         }
-
+        toMainActivity();
     }
 
     //请求权限
     private void startRequestPermision(String[] permissions) {
-        ActivityCompat.requestPermissions(this, permissions, REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, permissions, PermissionUtil.REQUEST_CODE);
     }
 
     //处理权限申请回调
@@ -47,7 +46,7 @@ public class LogoActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode ==  REQUEST_CODE&&grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode ==  PermissionUtil.REQUEST_CODE&&grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             //如果用户允许
             toMainActivity();
         } else {

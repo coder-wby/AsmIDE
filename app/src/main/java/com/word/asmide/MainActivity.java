@@ -2,6 +2,8 @@ package com.word.asmide;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import com.word.asmide.ui.WRecyclerAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton main_fab;
     private FileHelper fileHelper;
     private String[] filelist;
-    private ArrayList<String> left_item_text;
+    private WRecyclerAdapter Wadapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,32 @@ public class MainActivity extends AppCompatActivity {
         //用于初始化
         init();
 
+        //设置点击监听
+        Wadapter.setOnItemClickListener(new WRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(int position) {
+                File file = new File(fileHelper.getCurrentPath() + filelist[position]);
+                if (file.isDirectory()) {
+                    fileHelper.gotoDir(filelist[position]);
+                    refreashFileList();
+                } else {
+                    try {
+                        fileHelper.readWithName(filelist[position]);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        TextView gotoParent = findViewById(R.id.parent);
+        gotoParent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fileHelper.gotoParent();
+                refreashFileList();
+            }
+        });
     }
 
     /**
@@ -55,40 +84,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRecyclerView() {
         //获取RecyclerLayout实例
-        left_item_text = new ArrayList<>();
         fileHelper = new FileHelper(FileHelper.STORAGE_DIR);
         filelist = fileHelper.list();
-        Collections.addAll(left_item_text, filelist);
         RecyclerView main_RecyclerView_left = findViewById(R.id.main_drawer_left_recycler);
-        final WRecyclerAdapter adapter = new WRecyclerAdapter(this,left_item_text);
+        Wadapter = new WRecyclerAdapter(this,filelist);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         main_RecyclerView_left.setLayoutManager(layoutManager);
         //设置分割线
         main_RecyclerView_left.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-        //设置点击监听
-        adapter.setOnItemClickListener(new WRecyclerAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(int position) {
-                File file = new File(fileHelper.getCurrentPath() + filelist[position]);
-                if (file.isDirectory()) {
-                    fileHelper.gotoDir(filelist[position]);
-                    left_item_text = new ArrayList<>();
-                    filelist = fileHelper.list();
-                    Collections.addAll(left_item_text, filelist);
-                    adapter.update(left_item_text);
-                } else {
-                    try {
-                        fileHelper.readWithName(filelist[position]);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        main_RecyclerView_left.setAdapter(adapter);
+
+        main_RecyclerView_left.setAdapter(Wadapter);
     }
 
+    void refreashFileList() {
+        filelist = fileHelper.list();
+        Wadapter.update(filelist);
+    }
 
     private void initDrawerLayout() {
         mainDrawerLayout_left = findViewById(R.id.drawer_layout);
@@ -124,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
 		super.onBackPressed();
         }
     }
+
+
 }
 
 

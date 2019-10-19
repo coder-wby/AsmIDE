@@ -1,6 +1,5 @@
-package com.word.asmide.file;
+package com.word.asmide;
 
-import android.content.Context;
 import android.os.Environment;
 
 import java.io.BufferedInputStream;
@@ -10,27 +9,27 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class FileHelper {
+class FileHelper {
 
     private String currentPath;
-    public static final String STORAGE_DIR=  Environment.getExternalStorageDirectory().toString();
+    static final String STORAGE_DIR=  Environment.getExternalStorageDirectory().toString();
 
-    public FileHelper(String currentPath) {
+    FileHelper(String currentPath) {
         this.currentPath = currentPath;
 	    formatCurrentPath();
     }
 
-    public void gotoDir(String dirName) {
+    void gotoDir(String dirName) {
        formatCurrentPath();
        setCurrentPath(getCurrentPath()+dirName);
     }
 
-    public void setCurrentPath(String currentPath) {
+    void setCurrentPath(String currentPath) {
         formatCurrentPath();
         this.currentPath = currentPath;
     }
 
-    public String getCurrentPath() {
+    String getCurrentPath() {
         formatCurrentPath();
         return currentPath;
     }
@@ -42,8 +41,8 @@ public class FileHelper {
         }
     }
 
-    public String readWithName(String name) throws IOException {
-        return readWithPath(name);
+    String readWithName(String name) throws IOException {
+        return readWithPath(currentPath+name);
     }
 
     /***
@@ -74,7 +73,7 @@ public class FileHelper {
 
     public void gotoParent() {
         formatCurrentPath();
-        new File(currentPath).getParent();
+        this.currentPath = new File(currentPath).getParent();
         formatCurrentPath();
     }
 }

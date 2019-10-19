@@ -2,7 +2,6 @@ package com.word.asmide;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,14 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.word.asmide.file.FileHelper;
+import com.word.asmide.ui.CodeEditor;
 import com.word.asmide.ui.WRecyclerAdapter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private FileHelper fileHelper;
     private String[] filelist;
     private WRecyclerAdapter Wadapter;
+    private CodeEditor codeEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     refreashFileList();
                 } else {
                     try {
-                        fileHelper.readWithName(filelist[position]);
+                        codeEditor.setText(fileHelper.readWithName(filelist[position]));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -79,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
         initFloatActionBar();
         initDrawerLayout();
         initRecyclerView();
+        initCodeEditor();
+    }
+
+    private void initCodeEditor() {
+        codeEditor = findViewById(R.id.main_CodeEditor);
     }
 
 

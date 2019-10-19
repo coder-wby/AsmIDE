@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.word.asmide.R;
 
-import java.util.List;
-
 public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.ViewHolder> {
 
     private Context context;

@@ -31,8 +31,9 @@ public class LogoActivity extends AppCompatActivity {
     private void initPermission() {
         if(!checkPermission()) {
             startRequestPermision(PermissionUtil.Permission);
+        } else {
+            toMainActivity();
         }
-        toMainActivity();
     }
 
     //请求权限

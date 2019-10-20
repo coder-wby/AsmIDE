@@ -1,8 +1,8 @@
 package com.word.asmide;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
 
+@Deprecated
 public class HighlightArray{
 
     //用于标识token的类型，如注释，伪指令等

@@ -9,5 +9,10 @@ public class Values {
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
     static int REQUEST_CODE = 2;
     //代码高亮相关
-    public static int TYPE_TEXT = Color.BLUE;
+    public static final int TYPE_TEXT_COLOR = Color.BLACK;
+    //不同类型代码的正则表达式
+    static class TYPE_REGULAR {
+        public static final String NEXT_LINE = "\n";
+//        public static final String = ";"
+    }
 }

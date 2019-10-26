@@ -8,12 +8,15 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.word.asmide.HighlightArray;
 import com.word.asmide.Values;
+import com.word.asmide.code.Token;
+
+import java.util.ArrayList;
 
 public class CodeEditor extends View {
 
     String[] text;
+    //将不同token的不同高亮颜色存储起来
     int[] type;
     Paint paint;
 
@@ -28,7 +31,7 @@ public class CodeEditor extends View {
         if(text != null && type != null) {
             for (int i : type) {
                 paint.setColor(i);
-                canvas.drawText(text[0], 100, 100, paint);
+                canvas.drawText(text[0], 0, 0, paint);
             }
         }
 
@@ -36,12 +39,12 @@ public class CodeEditor extends View {
 
     public void setText(String text) {
         this.text = new String[]{text};
-        this.type = new int[]{Values.TYPE_TEXT};
+        this.type = new int[]{Values.TYPE_TEXT_COLOR};
         //重绘
         invalidate();
     }
 
-    public void setText(HighlightArray highlightArray) {
-
+    public void setText(ArrayList<Token> tokens) {
+//
     }
 }

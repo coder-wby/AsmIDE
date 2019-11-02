@@ -15,4 +15,7 @@ public class Values {
         public static final String NEXT_LINE = "\n";
 //        public static final String = ";"
     }
+    //CodeEdtor相关
+    //CodeEditor单行高度
+    public static final int LINE_HEIGH = 10;
 }

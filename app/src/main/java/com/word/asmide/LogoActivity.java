@@ -33,6 +33,7 @@ public class LogoActivity extends AppCompatActivity {
             startRequestPermision(PermissionUtil.Permission);
         } else {
             toMainActivity();
+            finish();
         }
     }
 
@@ -50,6 +51,7 @@ public class LogoActivity extends AppCompatActivity {
         if (requestCode ==  PermissionUtil.REQUEST_CODE&&grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             //如果用户允许
             toMainActivity();
+            finish();
         } else {
             //如果用户拒绝
             //说明申请权限原因

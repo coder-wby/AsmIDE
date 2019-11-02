@@ -65,7 +65,16 @@ public class MainActivity extends AppCompatActivity {
                 refreashFileList();
             }
         });
+
+        //CodeEditor滑动监听
+        codeEditor.setOnMoveListener(new CodeEditor.OnMoveListener() {
+            @Override
+            public void OnMove(float offsetX,float offsetY) {
+
+            }
+        });
     }
+
 
     /**
      * 本方法主要用于初始化
@@ -78,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
         initCodeEditor();
     }
+
 
     private void initCodeEditor() {
         codeEditor = findViewById(R.id.main_CodeEditor);

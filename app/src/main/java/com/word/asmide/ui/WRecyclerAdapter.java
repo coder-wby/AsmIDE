@@ -11,14 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.word.asmide.R;
 
+import java.util.ArrayList;
+
 public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.ViewHolder> {
 
     private Context context;
-    private String[] items;
-    public static String PARENT_DIR = "./";
+    private ArrayList<String> items;
     private OnItemClickListener itemClickListener;
+    private String[] othersText;
 
-    public WRecyclerAdapter(Context context, String[] items) {
+    public WRecyclerAdapter(Context context, ArrayList<String> items) {
         this.context = context;
         this.items = items;
     }
@@ -27,13 +29,20 @@ public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.View
      * 更新列表数据并重绘
       * @param items 新的数据
      */
-    public void update(String[] items){
+    public void update(ArrayList<String> items){
         this.items = items;
         notifyDataSetChanged();
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.itemClickListener = listener;
+    }
+
+    public void setOthersText(String[] othersText) {
+        this.othersText = othersText;
+        for (int i = 0;i <= othersText.length;i++)
+            items.add(i,othersText[i]);
+        update(items);
     }
 
     /***
@@ -55,7 +64,7 @@ public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.item_TextView.setText(items[position]);
+        holder.item_TextView.setText(items.get(position-othersText.length));
         //判断其是否为空，若不为空，则为其设置点击监听
         if(itemClickListener != null) {
 
@@ -63,7 +72,7 @@ public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.View
 
                 @Override
                 public void onClick(View view) {
-                    itemClickListener.OnItemClick(position);
+                    itemClickListener.OnItemClick(position-othersText.length);
                 }
             });
         }
@@ -72,7 +81,7 @@ public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.View
 
     @Override
     public int getItemCount() {
-        return items.length;
+        return items.size();
     }
 
     public interface OnItemClickListener {

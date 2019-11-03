@@ -10,6 +10,4 @@
         android:id="@+id/mDrawer_list_item_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
- 
 </LinearLayout>

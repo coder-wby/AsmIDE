@@ -1,6 +1,13 @@
 package com.word.asmide;
 
+import com.word.asmide.code.LineToken;
+import com.word.asmide.code.Token;
+
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Timer;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +19,14 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+        ArrayList k = new ArrayList<>();
+        k.add("");
+        System.out.println(k.size());
+
+    }
+
+
+    public static void main(String[] args) {
+
     }
 }

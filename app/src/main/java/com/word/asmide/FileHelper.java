@@ -8,11 +8,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 class FileHelper {
 
     private String currentPath;
     static final String STORAGE_DIR=  Environment.getExternalStorageDirectory().toString();
+
 
     FileHelper(String currentPath) {
         this.currentPath = currentPath;
@@ -42,7 +44,11 @@ class FileHelper {
     }
 
     String readWithName(String name) throws IOException {
-        return readWithPath(currentPath+name);
+        File currentFile = new File(currentPath+name);
+        if (currentFile.isFile()&&currentFile.canRead())
+            return readWithPath(currentPath+name);
+        else
+            return null;
     }
 
     /***
@@ -67,8 +73,13 @@ class FileHelper {
         return  content.toString();
     }
 
-    public String[] list() {
-        return new File(currentPath).list();
+    public ArrayList<String> list() {
+        ArrayList<String> list = new ArrayList<>();
+        String[] filelist = new File(currentPath).list();
+        for (String content:filelist) {
+            list.add(content);
+        }
+        return list;
     }
 
     public void gotoParent() {

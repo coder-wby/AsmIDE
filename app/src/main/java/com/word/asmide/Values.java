@@ -11,8 +11,9 @@ public class Values {
     //代码高亮相关
     public static final int TYPE_TEXT_COLOR = Color.BLACK;
     //不同类型代码的正则表达式
-    static class TYPE_REGULAR {
-        public static final String NEXT_LINE = "\n";
+    public static class TYPE_REGULAR {
+        public static final String LINE_TOKEN = "\n";
+        public static final String INSTRUCTION_TOKEN = "MOV|ADD|SUB|JMP|PUSH|POP";
 //        public static final String = ";"
     }
     //CodeEdtor相关

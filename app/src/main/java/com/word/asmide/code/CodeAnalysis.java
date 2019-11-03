@@ -1,5 +1,7 @@
 package com.word.asmide.code;
 
+import java.util.ArrayList;
+
 public class CodeAnalysis {
 
     //需要进行分析的代码
@@ -9,8 +11,7 @@ public class CodeAnalysis {
         setCode(code);
     }
 
-//    public Token[] analysisCode() {
-
+//    public ArrayList<Token> analysisCode() {
 //    }
 
     public void setCode(String code) {

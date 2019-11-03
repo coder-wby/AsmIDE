@@ -20,15 +20,15 @@ import com.word.asmide.ui.WRecyclerAdapter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
 
     Toolbar mainToolbar;
     DrawerLayout mainDrawerLayout_left;
-    FloatingActionButton main_fab;
     private FileHelper fileHelper;
-    private String[] filelist;
+    private ArrayList<String> filelist;
     private WRecyclerAdapter Wadapter;
     private CodeEditor codeEditor;
 
@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
         Wadapter.setOnItemClickListener(new WRecyclerAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(int position) {
-                File file = new File(fileHelper.getCurrentPath() + filelist[position]);
+                File file = new File(fileHelper.getCurrentPath() + filelist.get(position));
                 if (file.isDirectory()) {
-                    fileHelper.gotoDir(filelist[position]);
+                    fileHelper.gotoDir(filelist.get(position));
                     refreashFileList();
                 } else {
                     try {
-                        codeEditor.setText(fileHelper.readWithName(filelist[position]));
+                        codeEditor.setText(fileHelper.readWithName(filelist.get(position)));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -57,14 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView gotoParent = findViewById(R.id.parent);
-        gotoParent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fileHelper.gotoParent();
-                refreashFileList();
-            }
-        });
+
 
         //CodeEditor滑动监听
         codeEditor.setOnMoveListener(new CodeEditor.OnMoveListener() {
@@ -82,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
      */
     void init(){
         initToolbar();
-        initFloatActionBar();
         initDrawerLayout();
         initRecyclerView();
         initCodeEditor();
@@ -99,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
         fileHelper = new FileHelper(FileHelper.STORAGE_DIR);
         filelist = fileHelper.list();
         RecyclerView main_RecyclerView_left = findViewById(R.id.main_drawer_left_recycler);
-        Wadapter = new WRecyclerAdapter(this,filelist);
+        Wadapter = new WRecyclerAdapter(this,
+                filelist);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         main_RecyclerView_left.setLayoutManager(layoutManager);
@@ -122,17 +115,6 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
     }
 
-    private void initFloatActionBar() {
-        main_fab = findViewById(R.id.fab);
-        main_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Snackbar.make(view, "Re with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
 
     private void initToolbar() {
         mainToolbar = findViewById(R.id.toolbar);
@@ -148,8 +130,6 @@ public class MainActivity extends AppCompatActivity {
 		super.onBackPressed();
         }
     }
-
-
 }
 
 

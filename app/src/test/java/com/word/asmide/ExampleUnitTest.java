@@ -19,10 +19,8 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        ArrayList k = new ArrayList<>();
-        k.add("");
-        System.out.println(k.size());
-
+        String[] a = {};
+        System.out.println(a.length);
     }
 
 

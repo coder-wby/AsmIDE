@@ -18,7 +18,7 @@ public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.View
     private Context context;
     private ArrayList<String> items;
     private OnItemClickListener itemClickListener;
-    private String[] othersText;
+
 
     public WRecyclerAdapter(Context context, ArrayList<String> items) {
         this.context = context;
@@ -38,12 +38,7 @@ public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.View
         this.itemClickListener = listener;
     }
 
-    public void setOthersText(String[] othersText) {
-        this.othersText = othersText;
-        for (int i = 0;i <= othersText.length;i++)
-            items.add(i,othersText[i]);
-        update(items);
-    }
+   
 
     /***
      *
@@ -64,7 +59,7 @@ public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.item_TextView.setText(items.get(position-othersText.length));
+        holder.item_TextView.setText(items.get(position));
         //判断其是否为空，若不为空，则为其设置点击监听
         if(itemClickListener != null) {
 
@@ -72,11 +67,10 @@ public class WRecyclerAdapter extends RecyclerView.Adapter<WRecyclerAdapter.View
 
                 @Override
                 public void onClick(View view) {
-                    itemClickListener.OnItemClick(position-othersText.length);
+                    itemClickListener.OnItemClick(position);
                 }
             });
         }
-
     }
 
     @Override

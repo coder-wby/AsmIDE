@@ -1,8 +1,6 @@
 package com.word.asmide;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +11,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.word.asmide.ui.CodeEditor;
 import com.word.asmide.ui.WRecyclerAdapter;
 
@@ -58,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         //CodeEditor滑动监听
         codeEditor.setOnMoveListener(new CodeEditor.OnMoveListener() {
             @Override
@@ -100,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         main_RecyclerView_left.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 
         main_RecyclerView_left.setAdapter(Wadapter);
+
     }
 
     void refreashFileList() {

@@ -37,6 +37,7 @@ class FileHelper {
     }
 
     //检查当前路径最后一个字符是否为/，如果不是则加上/，以此来标准化当前路径
+    @Deprecated
     private void formatCurrentPath() {
         if(currentPath.charAt(currentPath.length() - 1) != '/') {
             this.currentPath = currentPath + "/";
